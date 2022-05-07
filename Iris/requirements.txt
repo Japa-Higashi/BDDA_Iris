@@ -1,3 +1,2 @@
-sckiti-learn
+scikit-learn
 pandas
-pickle
