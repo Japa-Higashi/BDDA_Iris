@@ -4,33 +4,32 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.tree import DecisionTreeClassifier
 import pandas as pd
 
-st.write("# Classificação da Íris")
-st.write("## Exemplo de complemento de pétala e sépala")
-st.sidebar.write("### Parametros")
-comp_sepala = st.sidebar.slider("Comprimento da sépala", 4.8, 8.0, 5.8, 0.1)
-comp_petala = st.sidebar.slider("Comprimento da pétala", 0.9, 7.0, 3.8, 0.1)
+st.write("# Classificação de Diagnostico de Cancer")
+st.write("## Exemplo com radius2 e concavity2")
+st.sidebar.write("### Parâmetros")
+radius2 = st.sidebar.slider("Comprimento da radius2", -2.0, 2.0,0.2,0.1)
+concavity2 = st.sidebar.slider("Comprimento da concavity2",-2.0, 2.0, 0.2, 0.1)
 
-with open("Iris/objetos.pkl", "rb") as arquivo:
+with open("objetos.pkl", "rb") as arquivo:
   ss, dtc = pickle.load(arquivo)
-
   
-estrutura = {'comp_sepala' : comp_sepala, 'comp_petala' : comp_petala}
+estrutura = {'radius2' : radius2, 'concavity2' : concavity2}
 
-df = pd.DataFrame(estrutura, index=[0])
+df = pd.DataFrame(estrutura, index = [0]) 
+st.write("### Parâmetros de entreada")
 st.write(df)
 
 df = ss.transform(df)
 st.write(df)
 
 predicao = dtc.predict(df)
-st.write(f"A classe dessa flor é: **{predicao[0]}**")
-
+st.write(f"A chance de ter cancer é : {predicao[0]}")
 predicao = dtc.predict_proba(df)
 predicao = pd.DataFrame(predicao)
 predicao.rename({
-  0: "Iris-setosa",
-  1: "Iris-versicolor",
-  2: "Iris-virginica"
-}, axis=1, inplace=True)
-st.write("Probabilidades")
+  0: "B",
+  1: "M"
+}, axis = 1, inplace = True)
+
+st.write("Probabilidade")
 st.write(predicao)
